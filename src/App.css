@@ -1,0 +1,42 @@
+body {
+  background-color: #f5dad0;
+}
+
+h3 {
+  color: #f73a25
+}
+
+#logoutBtn {
+  width: 90px;
+  height: 25px;
+  border-radius: 5px;
+  color: aliceblue;
+  border: none;
+  cursor: pointer;
+  background-color: rgb(216, 83, 25);
+}
+
+#logoutBtn:hover {
+  background-color: red;
+}
+
+#logoutBtn:active {
+  background-color: rgb(255, 128, 0);
+}
+
+.App {
+  text-align: center;
+}
+
+.heading {
+  font-family: sans-serif;
+  color: rgb(10, 131, 237);
+}
+
+.signIn {
+
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  height: 50vh;
+}
