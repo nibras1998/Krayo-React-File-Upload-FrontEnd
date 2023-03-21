@@ -8,9 +8,13 @@ li:hover {
 
 .fileCon {
     display: flex;
-    width: 90%;
+    margin: auto;
+    width: 80%;
     height: auto;
-    margin: 2px solid black;
+    border: 6px ridge rgb(19, 156, 171);
+    border-radius: 10px;
+    padding-top:10px;
+    padding-bottom: 10px;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;

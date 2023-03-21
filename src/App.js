@@ -80,7 +80,7 @@ function App() {
       <h1 className='heading'>React File Uploader</h1>
       {isLoggedIn ? (
         <>
-          {profile && <Home profile={profile} />}
+          {profile && user && <Home profile={profile} user={user}/>}
           <button id='logoutBtn' onClick={handleSignOut}>Logout</button>
         </>
       ) : (

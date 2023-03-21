@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Home.css';
 
-function Home({ profile }) {
+function Home({ profile, user }) {
     const userData = profile && profile
+    const tokenData = user && user
     console.log(userData)
 
     const [file, setFile] = useState(null);
@@ -12,8 +13,13 @@ function Home({ profile }) {
     const [empty, setEmpty] = useState(null)
 
     const loadFiles = async () => {
+        console.log(tokenData)
         try {
-            const res = await axios.get(`http://localhost:5000/api/files/${userData.id}`);
+            const res = await axios.get(`http://localhost:5000/api/files/${userData.id}`, {
+                headers: {
+                    authorization: `Bearer ${tokenData.access_token}`
+                }
+            });
             setFiles(res.data.files);
             console.log(res.data)
         } catch (err) {
@@ -37,6 +43,7 @@ function Home({ profile }) {
         try {
             const res = await axios.post(`http://localhost:5000/api/upload/${userData.id}`, formData, {
                 headers: {
+                    authorization: `Bearer ${tokenData.access_token}`,
                     'Content-Type': 'multipart/form-data'
                 }
             });
@@ -54,6 +61,9 @@ function Home({ profile }) {
     const downloadFile = async (filename) => {
         try {
             const res = await axios.get(`http://localhost:5000/api/files/${userData.id}/${filename}`, {
+                headers:{
+                    authorization: `Bearer ${tokenData.access_token}`
+                },
                 responseType: 'blob'
             });
             const url = window.URL.createObjectURL(new Blob([res.data]));
@@ -71,6 +81,10 @@ function Home({ profile }) {
         loadFiles();
     }, []);
 
+    const loadImage=()=>{
+        
+    }
+
     return (
         <div>
             <h2>You are successfully logged in {userData && userData.name}</h2>
@@ -84,8 +98,10 @@ function Home({ profile }) {
                     {files && files.map((file) => (<>
                         <div className='imgCon'>
                             {file.type.includes("image") ?
-                                <img src={`http://localhost:5000/api/files/${userData.id}/${file.name}`} alt="My Image" onClick={() => downloadFile(file.name)}></img> :
-                                <li style={{ marginTop: "80px" }} key={file.name} onClick={() => downloadFile(file.name)}>{file.name}</li>}
+                                <img src={`http://localhost:5000/api/files/display/${userData.id}/${file.name}/${tokenData.access_token}`} alt="My Image" 
+                                onClick={() => downloadFile(file.name)}></img> :
+                                <li style={{ marginTop: "80px" }} key={file.name} onClick={() => downloadFile(file.name)}>{file.name}</li>
+                            }
                         </div>
                     </>
                     ))}
