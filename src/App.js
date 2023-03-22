@@ -73,6 +73,11 @@ function App() {
     setUser(null)
     setProfile(null);
     localStorage.clear();
+    if (user) {
+      axios.post(`https://oauth2.googleapis.com/revoke?token=${user.access_token}`)
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
+    }
   };
 
   return (
